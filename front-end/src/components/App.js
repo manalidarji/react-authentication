@@ -1,6 +1,13 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LogInPage from '../pages/LogInPage';
+
 const App = () => {
 	return(
-		<div>this is app</div>
+		<BrowserRouter>
+			<Routes>
+				<Route path='/login' element={<LogInPage/>} />
+			</Routes>
+		</BrowserRouter>
 	)
 }
 
