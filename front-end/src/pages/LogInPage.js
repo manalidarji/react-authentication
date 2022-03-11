@@ -1,12 +1,23 @@
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import axios from 'axios';
+import useToken from '../auth/useToken';
 
 const LoginPage = () => {
-    let [emailValue, setEmailValue] = useState('');
-    let [passwordValue, setPasswordValue] = useState('');
+    const navigate = useNavigate();
+    const [token, setToken] = useToken();
+
+    const [emailValue, setEmailValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
 
     const onLoginClicked = async () => {
-        alert('login btn clicked');
+        const response = await axios.post('/api/login', {
+            email: emailValue,
+            password: passwordValue
+        });
+
+        setToken(response.data.token);
+        navigate('/', { replace: true });
     }
 
     return(
