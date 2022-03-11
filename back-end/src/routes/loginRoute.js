@@ -31,11 +31,11 @@ export const loginRoute = {
                 process.env.JWT_SECRET, 
                 { expiresIn: '2d' },
                 (err, token) => {
-                    (err) ? res.sendStatus(500).json(err) : res.sendStatus(200).json(token);
+                    (err) ? res.status(500).json(err) : res.status(200).json({token});
                 });
         }else{
             // if password doesn't match then send 401 - unauthorized 
-            res.sendStatus(401);
+            res.status(401);
         }
     }
 }
