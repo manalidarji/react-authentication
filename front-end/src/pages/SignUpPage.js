@@ -39,7 +39,7 @@ const SignUpPage = () => {
                     !passwordValue !== !confirmPasswordValue } 
                 onClick={onSignupClicked}>Sign Up</button>
 
-            <button><Link to='/login'>Already have have an account? Log in Now</Link></button>
+            <button><Link to='/login'>Already have an account? Login Now</Link></button>
         </div>
     )
 }

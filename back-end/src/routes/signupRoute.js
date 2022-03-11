@@ -6,7 +6,7 @@ export const signupRoute = {
     path: '/api/signup',
     method: 'post',
     handler: async (req, res) => {
-        // getting emial and password from front end
+        // getting email and password from front end
         const {email, password} = req.body;
 
         // new user using the data
@@ -19,14 +19,11 @@ export const signupRoute = {
         // getting db
         const db = getDbConnection('react-auth-db');
 
-        // checking if this new user is not present in the db
-        // equivalent of SELECT statement in a table in a MySQL database 
+        // checking if this new user is not present in the db equivalent of SELECT statement in a table in a MySQL database 
         const user = await db.collection('users').findOne({email});
 
-        if(user){
-            // 409 - conflict error code
-            res.sendStatus(409); 
-        }
+        // if user found then send 409 - conflict error code 
+        if(user) res.sendStatus(409);
 
         // encrypt password before saving it to db
         const passwordHash = await bcrypt.hash(password, 10);        
@@ -34,7 +31,7 @@ export const signupRoute = {
         // insertOne() - To insert a record(or document as it is called in MongoDB), into a collection
         const result = await db.collection('users').insertOne({
             email: email,
-            password: passwordHash,
+            passwordHash: passwordHash,
             info: startingInfo,
             isVerified: false
         });
