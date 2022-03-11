@@ -1,14 +1,25 @@
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import useToken from '../auth/useToken';
+import axios from 'axios';
 
 const SignUpPage = () => {
-    let [emailValue, setEmailValue] = useState('');
-    let [passwordValue, setPasswordValue] = useState('');
-    let [confirmPasswordValue, setConfirmPasswordValue] = useState('');
+    const [token,  setToken] = useToken();
+    const navigate = useNavigate();
+
+    const [emailValue, setEmailValue] = useState('');
+    const [passwordValue, setPasswordValue] = useState('');
+    const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
 
 
     const onSignupClicked = async () => {
-        alert('sign up btn clicked');
+        const response = await axios.post('/api/signup', {
+            email: emailValue,
+            password: passwordValue
+        });
+
+        setToken(response.data.token);
+        navigate('/', { replace: true });
     }
 
     return(
