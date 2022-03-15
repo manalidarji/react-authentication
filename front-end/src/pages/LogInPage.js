@@ -5,7 +5,7 @@ import useToken from '../auth/useToken';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const [token, setToken] = useToken();
+    const [, setToken] = useToken();
 
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');

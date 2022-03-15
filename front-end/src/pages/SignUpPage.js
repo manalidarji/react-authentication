@@ -4,7 +4,7 @@ import useToken from '../auth/useToken';
 import axios from 'axios';
 
 const SignUpPage = () => {
-    const [token,  setToken] = useToken();
+    const [,  setToken] = useToken();
     const navigate = useNavigate();
 
     const [emailValue, setEmailValue] = useState('');
