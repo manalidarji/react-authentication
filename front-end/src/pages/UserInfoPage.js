@@ -1,9 +1,11 @@
+import {useNavigate} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import useToken from '../auth/useToken';
 import useUser from '../auth/useUser';
 import axios from 'axios';
 
 const UserInfoPage = () => {
+	const navigate = useNavigate();
 	const [token, setToken] = useToken();
 	const user = useUser();
 	const {_id, email, info} = user;
@@ -47,7 +49,8 @@ const UserInfoPage = () => {
 	}
 
 	const logOut = () => {
-		alert('Log out clicked');
+		localStorage.removeItem('token');
+		navigate('/login', { replace: true });
 	}
 
 	return (
