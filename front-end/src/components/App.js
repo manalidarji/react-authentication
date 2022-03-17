@@ -4,6 +4,7 @@ import UserInfoPage from '../pages/UserInfoPage';
 import LogInPage from '../pages/LogInPage';
 import SignUpPage from '../pages/SignUpPage';
 import PleaseVerifyEmailPage from '../pages/PleaseVerifyEmailPage';
+import EmailVerificationLandingPage from '../pages/EmailVerificationLandingPage';
 
 const App = () => {
 	return(
@@ -15,7 +16,7 @@ const App = () => {
 				<Route path='/login' element={<LogInPage/>} />
 				<Route path='/signup' element={<SignUpPage />} />
 				<Route path='/please-verify' element={<PleaseVerifyEmailPage />} />
-				{/* <Route path='/verify-email' element={<PleaseVerifyEmailPage />} /> */}
+				<Route path='/verify-email/:verificationString' element={<EmailVerificationLandingPage />} />
 			</Routes>
 		</BrowserRouter>
 	)
