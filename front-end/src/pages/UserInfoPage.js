@@ -8,7 +8,7 @@ const UserInfoPage = () => {
 	const navigate = useNavigate();
 	const [token, setToken] = useToken();
 	const user = useUser();
-	const {_id, email, info} = user;
+	const {id, email, info} = user;
 
 	const [favoriteFood, setFavoriteFood] = useState(info.favoriteFood || '');
 	const [hairColor, setHairColor] = useState(info.hairColor || '');
@@ -30,7 +30,7 @@ const UserInfoPage = () => {
 	// updating the user afte save btn was clicked
 	const saveChanges = async () => {
 		try {
-			const response = await axios.put(`/api/users/${_id}`, 
+			const response = await axios.put(`/api/users/${id}`, 
 				{favoriteFood, hairColor, bio},
 				{headers: {Authorization: `Bearer ${token}`}}
 			);
