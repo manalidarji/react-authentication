@@ -8,7 +8,7 @@ const UserInfoPage = () => {
 	const navigate = useNavigate();
 	const [token, setToken] = useToken();
 	const user = useUser();
-	const {id, email, info} = user;
+	const {id, email, info, isVerified} = user;
 
 	const [favoriteFood, setFavoriteFood] = useState(info.favoriteFood || '');
 	const [hairColor, setHairColor] = useState(info.hairColor || '');
@@ -56,6 +56,7 @@ const UserInfoPage = () => {
 	return (
 		<div className="content-container">
 			<h1>Info Page for {email}</h1>
+            {!isVerified && <div className="fail">You won't be able to make changes untill you verify your email</div>}
 			{showSuccessMessage && <div className="success">Successfully saved user data!</div>}
             {showErrorMessage && <div className="fail">Uh oh... something went wrong and we couldn't save changes</div>}
 			<label>
