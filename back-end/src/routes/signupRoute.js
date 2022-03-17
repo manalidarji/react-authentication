@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getDbConnection } from '../db';
+import { sendEmail } from '../util/sendEmail';
+import { v4 as uuid } from 'uuid';
 
 export const signupRoute = {
     path: '/api/signup',
@@ -26,16 +28,34 @@ export const signupRoute = {
         if(user) res.sendStatus(409);
 
         // encrypt password before saving it to db
-        const passwordHash = await bcrypt.hash(password, 10);        
+        const passwordHash = await bcrypt.hash(password, 10); 
+        
+        // generate unique verification string each time new user would be signing up
+        const verificationString = uuid();
 
         // insertOne() - To insert a record(or document as it is called in MongoDB), into a collection
         const result = await db.collection('users').insertOne({
             email: email,
             passwordHash: passwordHash,
             info: startingInfo,
-            isVerified: false
+            isVerified: false,
+            verificationString
         });
         const { insertedId } = result;
+
+        sendEmail({
+            to: email, // this will be email address of the user whose email we are trying to verify
+            from: process.env.FROM_EMAIL, // sender email that we set up in 'single sender' of 'sendGrid' web app
+            subject: 'Please verify your email',
+            text: `
+                Thanks for signing up! To verify your email, click here:
+                http://localhost:3000/verify-email/${verificationString}`
+        })
+        .then(() => {})
+        .catch(error => {
+            console.log(error);
+            res.sendStatus(500);
+        })
 
         // generate JSON Web Token
         jwt.sign({
