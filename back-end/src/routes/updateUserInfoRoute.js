@@ -29,9 +29,7 @@ export const updateUserInfoRoute = {
                 if(err){
                     return res.status(401).json({message: 'Unable to login'});
                 }
-
-                console.log(decoded);
-
+                
                 const {id, isVerified} = decoded;
 
                 // find that user and update the details of the same in db

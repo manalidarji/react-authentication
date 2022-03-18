@@ -16,7 +16,6 @@ const EmailVerificationLandingPage = () => {
 		const loadVerification = async () => {
 			try {
 				const response = await axios.put('/api/verify-email', {verificationString});
-				console.log(response);
 				setToken(response.data.token);
 				setIsSuccess(true);
 				setIsLoading(false);
@@ -25,7 +24,6 @@ const EmailVerificationLandingPage = () => {
 				setIsLoading(false);
 			}
 		}
-
 		loadVerification();
 	}, [setToken, verificationString]);
 
