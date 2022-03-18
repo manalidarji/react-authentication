@@ -30,15 +30,15 @@ export const updateUserInfoRoute = {
                     return res.status(401).json({message: 'Unable to login'});
                 }
                 
-                const {id, isVerified} = decoded;
+                const {id} = decoded;
 
                 // find that user and update the details of the same in db
                 if(id == userId){
-                    if(!isVerified) return res.status(403).json({message: 'You need to verify your email before updating the data'});
+                    if(!decoded.isVerified) return res.status(403).json({message: 'You need to verify your email before updating the data'});
 
                     const db= getDbConnection('react-auth-db');
                     const result = await db.collection('users').findOneAndUpdate(
-                        { id: ObjectID(id) },
+                        { _id: ObjectID(id) },
                         { $set: {info: updates} },
                         { returnOriginal: false }
                     );
